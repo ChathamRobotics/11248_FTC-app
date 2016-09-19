@@ -57,15 +57,15 @@ public class Omni_Trig extends OpMode {
 
         //## CALCULATE VALUES ##
 
-        //Takes regular x,y coordinates and converts them into polar (angle radius) cooridnates
-        //Then turns angle by 90 degrees (Pi/4) to accomidate omni wheel axis
+        //Takes regular x,y coordinates and converts them into polar (angle radius) coordinates
+        //Then turns angle by 90 degrees (Pi/4) to accommodate omni wheel axis
 
 
         //if x is 0, atan comes out undefined instead of PI/2 or 3PI/2
         if (x != 0) {
             angle = Math.atan(y / x);
 
-        }else if(y >= 0){//if it's 90 degrees use PI/2
+        }else if(y > 0){//if it's 90 degrees use PI/2
             angle = Math.PI/2;
 
         }else if(y < 0){
@@ -82,8 +82,10 @@ public class Omni_Trig extends OpMode {
             angle += Math.PI;
         }
 
-        FL = BR =  Math.sin(angle) * MAXSPEED * r; //takes new angle and raduis and converts them into the motor values
-        FR = BL = Math.cos(angle) * MAXSPEED * r;
+        //takes new angle and radius and converts them into the motor values
+
+        FL = BR =  Math.sin(angle) * MAXSPEED * r;  // New y axis
+        FR = BL = Math.cos(angle) * MAXSPEED * r;   // New x axis
 
         FL -= rotat; // implements rotation
         FR -= rotat;

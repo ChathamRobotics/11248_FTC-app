@@ -55,11 +55,11 @@ public class Omni extends OpMode {
         rotat = gamepad1.right_stick_x;
 
         BR = FL = getLeftSpeed(x,y) * MAXSPEED;
-        BR = FL = getRightSpeed(x,y) * MAXSPEED;
+        BL = FR = getRightSpeed(x,y) * MAXSPEED;
 
-        FL += rotat * MAXTTURN;
+        FL -= rotat * MAXTTURN;
         BL += rotat * MAXTTURN;
-        FR += rotat * MAXTTURN;
+        FR -= rotat * MAXTTURN;
         BR += rotat * MAXTTURN;
 
         FrontLeft.setPower(FL);
