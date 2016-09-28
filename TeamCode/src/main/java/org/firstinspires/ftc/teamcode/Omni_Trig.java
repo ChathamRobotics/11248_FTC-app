@@ -16,10 +16,12 @@ public class Omni_Trig extends OpMode {
     DcMotor BackLeft;
     DcMotor BackRight;
 
-    double MAXTTURN = .20;
+    double MAXTTURN = .30;
     double MAXSPEED = .70;
 
     double threshold = .001;
+
+    double DP_angle = 0;
 
     double x,y,rotat, angle, r;
     double FL,FR,BR,BL;
@@ -39,8 +41,8 @@ public class Omni_Trig extends OpMode {
 
         //## GET VALUES ##
 
-        //Gets values for x,y and rotation from the joysticks
-        //uses threshold for debouncing
+        // Gets values for x,y and rotation from the joysticks
+        // Uses threshold for debouncing
 
         if(Math.abs(gamepad1.left_stick_x) >= threshold){
             x = gamepad1.left_stick_x;
@@ -57,15 +59,20 @@ public class Omni_Trig extends OpMode {
 
         //## CALCULATE VALUES ##
 
-        //Takes regular x,y coordinates and converts them into polar (angle radius) cooridnates
-        //Then turns angle by 90 degrees (Pi/4) to accomidate omni wheel axis
+<<<<<<< HEAD
+        // Takes regular x,y coordinates and converts them into polar (angle radius) cooridnates
+        // Then turns angle by 90 degrees (Pi/4) to accomidate omni wheel axis
+=======
+        //Takes regular x,y coordinates and converts them into polar (angle radius) coordinates
+        //Then turns angle by 90 degrees (Pi/4) to accommodate omni wheel axis
+>>>>>>> origin/master
 
 
-        //if x is 0, atan comes out undefined instead of PI/2 or 3PI/2
+        // if x is 0, atan comes out undefined instead of PI/2 or 3PI/2
         if (x != 0) {
             angle = Math.atan(y / x);
 
-        }else if(y >= 0){//if it's 90 degrees use PI/2
+        }else if(y > 0){//if it's 90 degrees use PI/2
             angle = Math.PI/2;
 
         }else if(y < 0){
@@ -82,8 +89,20 @@ public class Omni_Trig extends OpMode {
             angle += Math.PI;
         }
 
-        FL = BR =  Math.sin(angle) * MAXSPEED * r; //takes new angle and raduis and converts them into the motor values
-        FR = BL = Math.cos(angle) * MAXSPEED * r;
+<<<<<<< HEAD
+        if(gamepad1.dpad_up){DP_angle = 0;}
+        if(gamepad1.dpad_right){DP_angle = Math.PI/2;}
+        if(gamepad1.dpad_down){DP_angle = Math.PI;}
+        if(gamepad1.dpad_left){DP_angle = (3*Math.PI)/2;}
+
+        FL = BR =  Math.sin(angle + DP_angle) * MAXSPEED * r; //takes new angle and raduis and converts them into the motor values
+        FR = BL = Math.cos(angle + DP_angle) * MAXSPEED * r;
+=======
+        //takes new angle and radius and converts them into the motor values
+
+        FL = BR =  Math.sin(angle) * MAXSPEED * r;  // New y axis
+        FR = BL = Math.cos(angle) * MAXSPEED * r;   // New x axis
+>>>>>>> origin/master
 
         FL -= rotat; // implements rotation
         FR -= rotat;
