@@ -10,9 +10,9 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 
 
-@TeleOp(name = "Template: TeleOp ", group = "Red")
+@TeleOp(name = "TeleOp ", group = "Red")
 
-//@Disabled //Uncomment to remove from shown OpModes
+@Disabled //Uncomment to remove from shown OpModes
 
 public class TestOpMode extends OpMode {
 

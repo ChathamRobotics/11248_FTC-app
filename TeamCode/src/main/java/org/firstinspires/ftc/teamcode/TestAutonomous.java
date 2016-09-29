@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 @Autonomous(name = "Template: Autonomous", group = "Red")
 
-//@Disabled //Uncomment to remove from shown OpModes
+@Disabled //Uncomment to remove from shown OpModes
 
 public class TestAutonomous extends LinearOpMode {
 

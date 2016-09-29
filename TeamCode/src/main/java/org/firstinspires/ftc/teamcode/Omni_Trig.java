@@ -1,12 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 
-@Autonomous(name = "Omni: Trig")
+@TeleOp(name = "Omni: Trig")
 //@Disabled //Uncomment to remove from shown OpModes
 
 public class Omni_Trig extends OpMode {
@@ -60,7 +61,7 @@ public class Omni_Trig extends OpMode {
         //## CALCULATE VALUES ##
 
         // Takes regular x,y coordinates and converts them into polar (angle radius) cooridnates
-        // Then turns angle by 90 degrees (Pi/4) to accomidate omni wheel axis
+        // Then turns angle by 90 degrees (Pi/4) to accommodate omni wheel axis
 
         // if x is 0, atan comes out undefined instead of PI/2 or 3PI/2
         if (x != 0) {
@@ -84,11 +85,11 @@ public class Omni_Trig extends OpMode {
         }
 
         if(gamepad1.dpad_up){DP_angle = 0;}
-        if(gamepad1.dpad_right){DP_angle = Math.PI/2;}
+        if(gamepad1.dpad_left){DP_angle = Math.PI/2;}
         if(gamepad1.dpad_down){DP_angle = Math.PI;}
-        if(gamepad1.dpad_left){DP_angle = (3*Math.PI)/2;}
+        if(gamepad1.dpad_right){DP_angle = (3*Math.PI)/2;}
 
-        FL = BR =  Math.sin(angle + DP_angle) * MAXSPEED * r; //takes new angle and raduis and converts them into the motor values
+        FL = BR =  Math.sin(angle + DP_angle) * MAXSPEED * r; //takes new angle and radius and converts them into the motor values
         FR = BL = Math.cos(angle + DP_angle) * MAXSPEED * r;
         
         FL -= rotat; // implements rotation
