@@ -74,7 +74,7 @@ public class Omni_Trig extends OpMode {
         }
 
         r = Math.sqrt( (x*x) + (y*y) ) ;//get the radius (hypotenuse)
-        angle -= (Math.PI/4);//take our angle and shift it 90 deg (PI/4)
+        angle += (Math.PI/4);//take our angle and shift it 90 deg (PI/4)
 
 
         // BUG FIX atan() assumes x is always positive and angle in standard position
