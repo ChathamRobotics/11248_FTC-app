@@ -118,7 +118,7 @@ public class Tutorial extends OpMode{
 
 
         /*
-        (You're servo).serPosition uses a double from -1 to 1 to set its position
+        (You're servo).setPosition uses a double from -1 to 1 to set its position
          */
         servo1.setPosition(1);
 
