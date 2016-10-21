@@ -1,14 +1,14 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-
 /**
  * //Cougars ControllerOpMode
  */
 @TeleOp(name = "ControllerOpMode", group = "General")
-//@Disabled
+@Disabled
 
 public class ControllerOpMode extends OpMode {
 
@@ -20,14 +20,14 @@ public class ControllerOpMode extends OpMode {
     private DcMotor bottomRight;
 
     /**
-     * This method will be called on INIT press.
+     *This method will be called on INIT press.
      */
     @Override
     public void init() {
-        topLeft = hardwareMap.dcMotor.get("FrontLeft");
-        topRight = hardwareMap.dcMotor.get("FrontRight");
-        bottomLeft = hardwareMap.dcMotor.get("BackLeft");
-        bottomRight = hardwareMap.dcMotor.get("BackRight");
+        topLeft = hardwareMap.dcMotor.get("frontLeft");
+        topRight = hardwareMap.dcMotor.get("frontRight");
+        bottomLeft = hardwareMap.dcMotor.get("backLeft");
+        bottomRight = hardwareMap.dcMotor.get("backRight");
     }
 
     /**
@@ -64,30 +64,32 @@ public class ControllerOpMode extends OpMode {
     @Override
     public void loop() {
         //Sets power of motors based on right stick rotation when left stick is moved.
-        topLeft.setPower(calculatePower(true,gamepad1.left_stick_x,gamepad1.right_stick_x*180));
-        topRight.setPower(calculatePower(false,gamepad1.left_stick_y,gamepad1.right_stick_x*180));
-        bottomLeft.setPower(calculatePower(false,gamepad1.left_stick_y,gamepad1.right_stick_x*180));
-        bottomRight.setPower(calculatePower(true,gamepad1.left_stick_x,gamepad1.right_stick_x*180));
+        float angle = (float)Math.atan2(gamepad1.right_stick_y,gamepad1.left_stick_x)*180;
+        float speed = gamepad1.left_stick_y;
+        topLeft.setPower(calculatePower(true,speed,angle));
+        topRight.setPower(-1*calculatePower(false,speed,angle));
+        bottomLeft.setPower(calculatePower(false,speed,angle));
+        bottomRight.setPower(-1*calculatePower(true,speed,angle));
 
         //Finds speed to rotate robot in case of shoulder button being pressed.
-        float speed = DEFAULT_SPEED;
+        float rotateSpeed = DEFAULT_SPEED;
         if(gamepad1.x)
-            speed = 1;
+            rotateSpeed = 1;
 
         //Rotates robot clockwise (left shoulder)
         if(gamepad1.left_bumper) {
-            topLeft.setPower(speed);
-            topRight.setPower(speed);
-            bottomLeft.setPower(speed);
-            bottomRight.setPower(speed);
+            topLeft.setPower(rotateSpeed);
+            topRight.setPower(rotateSpeed);
+            bottomLeft.setPower(rotateSpeed);
+            bottomRight.setPower(rotateSpeed);
         }
 
         //Rotates robot counter-clockwise (right shoulder)
         if(gamepad1.right_bumper) {
-            topLeft.setPower(-speed);
-            topRight.setPower(-speed);
-            bottomLeft.setPower(-speed);
-            bottomRight.setPower(-speed);
+            topLeft.setPower(-rotateSpeed);
+            topRight.setPower(-rotateSpeed);
+            bottomLeft.setPower(-rotateSpeed);
+            bottomRight.setPower(-rotateSpeed);
         }
     }
 
