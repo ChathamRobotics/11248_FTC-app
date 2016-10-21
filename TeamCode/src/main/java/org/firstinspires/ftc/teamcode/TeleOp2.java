@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 
 @TeleOp(name = "TeleOp2")
@@ -16,7 +17,10 @@ public class TeleOp2 extends OpMode {
     public static double THRESHOLD = .001;
 
     public DcMotor frontLeft, frontRight, backLeft, backRight;
-    public DcMotor conveyor, arm;
+    public DcMotor shooterL, shooterR, lift;
+    public Servo arm;
+
+    private boolean armUp;
 
     @Override
     public void init() {
@@ -25,8 +29,10 @@ public class TeleOp2 extends OpMode {
         backLeft = hardwareMap.dcMotor.get("BackLeft");
         backRight = hardwareMap.dcMotor.get("BackRight");
 
-        conveyor = hardwareMap.dcMotor.get("Conveyor");
-        arm = hardwareMap.dcMotor.get("Arm");
+        shooterL = hardwareMap.dcMotor.get("ShooterL");
+        shooterR = hardwareMap.dcMotor.get("ShooterR");
+        lift = hardwareMap.dcMotor.get("Lift");
+        arm = hardwareMap.servo.get("Arm");
     }
 
     @Override
@@ -98,17 +104,28 @@ public class TeleOp2 extends OpMode {
             backRight.setPower(-BR); //+
         }
 
-        //Turns on conveyor when left bumper is on, sets speed to CONVEYOR_SPEED
+        //Turns on shooter by setting both shooter motors to SHOOTER_SPEED.
         if(gamepad1.left_bumper) {
-            conveyor.setPower(CONVEYOR_SPEED);
+            shooterL.setPower(CONVEYOR_SPEED);
+            shooterR.setPower(CONVEYOR_SPEED);
         }
         else {
-            conveyor.setPower(0);
+            shooterL.setPower(0);
+            shooterR.setPower(0);
+        }
+
+        //Switches position when right bumper pressed
+        if(gamepad1.right_bumper) {
+            armUp = !armUp;
+        }
+        //Sets position accordingly
+        if(armUp) {
+            arm.setPosition(1);
         }
 
         //Sets arm motor to whatever right trigger is at (maxes out at MAX_SPEED)
         if(Math.abs(gamepad1.right_trigger) >= THRESHOLD) {
-            arm.setPower(gamepad1.right_trigger > MAX_SPEED ? MAX_SPEED :gamepad1.right_trigger);
+            lift.setPower(gamepad1.right_trigger > MAX_SPEED ? MAX_SPEED :gamepad1.right_trigger);
         }
 
         addTelemetry(angle,rotat,x,y,FL,FR,BR,BL,r);
