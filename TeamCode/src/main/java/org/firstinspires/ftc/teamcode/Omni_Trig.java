@@ -52,7 +52,7 @@ public class Omni_Trig extends OpMode {
         }
 
         if (Math.abs(gamepad1.left_stick_y) >= threshold) {
-            y = -gamepad1.left_stick_y; //Y AXIS INVERTED
+            y = gamepad1.left_stick_y;
         } else {
             y = 0;
         }
