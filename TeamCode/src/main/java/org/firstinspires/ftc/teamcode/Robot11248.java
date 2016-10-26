@@ -10,7 +10,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  */
 public class Robot11248 {
     public static final double RIGHT_ANGLE = Math.PI/2.0;
-    //public static final double OMNI_ANGLE_SHIFT = RIGHT_ANGLE/2.0;
+    public static final double OMNI_ANGLE_SHIFT = RIGHT_ANGLE/2.0;
 
     //Driving constants
     public static final double MAX_TURN = .30;
@@ -151,8 +151,8 @@ public class Robot11248 {
         angle = x != 0 && y != 0 ? Math.atan2(y,x) : 0;
         magnitude = Math.sqrt( (x*x) + (y*y) ) ;
 
-    //    //Turns angle by 45 degrees (Pi/4 radians) to accommodate omni wheel axis
-    //    angle += (OMNI_ANGLE_SHIFT);
+        //Turns angle by 45 degrees (Pi/4 radians) to accommodate omni wheel axis
+        angle += (OMNI_ANGLE_SHIFT);
 
         frontLeft.setPower(getMotorSpeed(true,false,magnitude,rotation,angle));
         frontRight.setPower(getMotorSpeed(true,true,magnitude,rotation,angle));
