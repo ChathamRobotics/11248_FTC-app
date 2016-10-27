@@ -9,8 +9,9 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  *
  */
 public class Robot11248 {
-    public static final double RIGHT_ANGLE = Math.PI/2.0;
-    public static final double OMNI_ANGLE_SHIFT = RIGHT_ANGLE/2.0;
+    //Angles
+    public static final double RIGHT_ANGLE = Math.PI/2;
+    public static final double OMNI_ANGLE_SHIFT = RIGHT_ANGLE/2;
 
     //Driving constants
     public static final double MAX_TURN = .30;
@@ -22,6 +23,13 @@ public class Robot11248 {
     public static final double PADDLE_UP = .85;
     public static final double LIFT_UP = 0;
     public static final double LIFT_DOWN = 1;
+
+    //hardware map
+    public static final String[] MOTOR_LIST =
+            {"FrontLeft","FrontRight","BackLeft","BackRight","ShooterL","ShooterR","Lift"};
+
+    public static final String[] SERVO_LIST =
+            {"servo1","servo2"};
 
     //Motors, Sensors, Telemetry
     private DcMotor frontLeft, frontRight, backLeft, backRight;
@@ -35,6 +43,17 @@ public class Robot11248 {
      * Current angle shift.
      */
     private double angleShift = 0;
+
+    /**
+     * Initializes using a list of motors.
+     * @param motors
+     * @param servos
+     * @param telemetry
+     */
+    public Robot11248(DcMotor[] motors, Servo[] servos, Telemetry telemetry) {
+        this(motors[0],motors[1],motors[2],motors[3],motors[4],motors[5],
+                motors[6],servos[0],servos[1],telemetry);
+    }
 
     /**
      * Creates a model of the robot and initializes sensors, motors, and telemetry

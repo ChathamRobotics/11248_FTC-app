@@ -4,10 +4,11 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.robot.Robot;
 
 
 @TeleOp(name = "TeleOpX")
-//@Disabled //Uncomment to remove from shown OpModes
+//@Disabled
 
 /**
  * FTC Team 11248 TeleOp Code.
@@ -23,11 +24,13 @@ public class TeleOpX extends OpMode {
     @Override
     public void init() {
         //Initializes all sensors and motors
-        robot = new Robot11248(hardwareMap.dcMotor.get("FrontLeft"),
-                hardwareMap.dcMotor.get("FrontRight"), hardwareMap.dcMotor.get("BackLeft"),
-                hardwareMap.dcMotor.get("BackRight"), hardwareMap.dcMotor.get("ShooterL"),
-                hardwareMap.dcMotor.get("ShooterR"), hardwareMap.dcMotor.get("Lift"),
-                hardwareMap.servo.get("servo2"), hardwareMap.servo.get("servo1"),telemetry);
+        DcMotor[] motors = new DcMotor[7];
+        Servo[] servos = new Servo[2];
+        for(int i = 0; i < motors.length; i++)
+            motors[i] = hardwareMap.dcMotor.get(Robot11248.MOTOR_LIST[i]);
+        for(int i = 0; i < servos.length; i++)
+            servos[i] = hardwareMap.servo.get(Robot11248.SERVO_LIST[i]);
+        robot = new Robot11248(motors,servos,telemetry);
     }
 
     @Override
