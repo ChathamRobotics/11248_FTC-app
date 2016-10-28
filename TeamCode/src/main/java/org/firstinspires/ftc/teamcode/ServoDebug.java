@@ -22,14 +22,15 @@ public class ServoDebug extends OpMode {
 
     int servo = 1;
     int servoPosition = 0;
+    double increment = .05;
 
     @Override
     public void init() {
 
         servo1 = hardwareMap.servo.get("servo1");
         servo2 = hardwareMap.servo.get("servo2");
-        //servo3 = hardwareMap.servo.get("servo3");
-        //servo4 = hardwareMap.servo.get("servo4");
+        servo3 = hardwareMap.servo.get("servo3");
+        servo4 = hardwareMap.servo.get("servo4");
 
 
 
@@ -48,10 +49,10 @@ public class ServoDebug extends OpMode {
         }
 
         while(gamepad1.dpad_down && servoPosition >= 0){
-            servoPosition--;
+            servoPosition -= increment;
         }
-        while(gamepad1.dpad_up && servoPosition <= 255){
-            servoPosition++;
+        while(gamepad1.dpad_up && servoPosition <= 1){
+            servoPosition += increment;
         }
 
 
@@ -64,18 +65,19 @@ public class ServoDebug extends OpMode {
                 servo2.setPosition(servoPosition);
                 break;
 
-//            case 3:
-//                servo3.setPosition(servoPosition);
-//                break;
-//
-//            case 4:
-//                servo4.setPosition(servoPosition);
-//                break;
+            case 3:
+                servo3.setPosition(servoPosition);
+                break;
+
+            case 4:
+                servo4.setPosition(servoPosition);
+                break;
 
 
         }
 
-        telemetry.addData("01:", "Position: " + servoPosition);
+        telemetry.addData("01:", "Servo: " + x);
+        telemetry.addData("02:", "Position: " + servoPosition);
 
 
     }
