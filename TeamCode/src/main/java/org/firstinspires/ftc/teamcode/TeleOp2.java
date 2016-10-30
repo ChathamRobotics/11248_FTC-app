@@ -16,19 +16,20 @@ public class TeleOp2 extends OpMode {
     public static double CONVEYOR_SPEED = .9;
     public static double THRESHOLD = .001;
 
-    public static double ARM_DOWN = .45;
-    public static double ARM_UP = .85;
+    public static double ARM_DOWN = .2;
+    public static double ARM_MID = .45;
+    public static double ARM_UP = 1;
 
     public static double LIFT_UP = 0;
     public static double LIFT_DOWN = 1;
 
     double x,y,rotat, angle, r; //u spelt rotateshun rong u dummy
     double FL,FR,BR,BL;
-    double DP_angle = 0;
+    double DP_angle = Math.PI;
 
     public DcMotor frontLeft, frontRight, backLeft, backRight;
     public DcMotor shooterL, shooterR, lift;
-    public Servo arm,liftServo;
+    public Servo arm,liftServo, liftServo2;
 
     private boolean liftUp = false;
     private boolean armUp = false;
@@ -43,10 +44,12 @@ public class TeleOp2 extends OpMode {
         shooterL = hardwareMap.dcMotor.get("ShooterL");
         shooterR = hardwareMap.dcMotor.get("ShooterR");
         lift = hardwareMap.dcMotor.get("Lift");
+        liftServo2 = hardwareMap.servo.get("servo3");
         liftServo =  hardwareMap.servo.get("servo2");
         arm = hardwareMap.servo.get("servo1");
 
-        liftServo.setPosition(LIFT_UP);
+        liftServo.setPosition(LIFT_DOWN);
+        liftServo2.setPosition(LIFT_UP);
         arm.setPosition(ARM_DOWN);
     }
 
@@ -76,8 +79,10 @@ public class TeleOp2 extends OpMode {
         //Sets beacon paddle up and down
         if(gamepad1.a){
             liftServo.setPosition(LIFT_UP);
+            liftServo2.setPosition(LIFT_DOWN);
         }else{
             liftServo.setPosition(LIFT_DOWN);
+            liftServo2.setPosition(LIFT_UP);
         }
 
         //Turns on shooter by setting both shooter motors to SHOOTER_SPEED.
@@ -93,9 +98,13 @@ public class TeleOp2 extends OpMode {
         //Switches position when right bumper pressed
         if(gamepad1.right_bumper) {
             arm.setPosition(ARM_UP);
+        } else if(gamepad1.x){
+            arm.setPosition(ARM_MID);
         } else {
             arm.setPosition(ARM_DOWN);
         }
+
+
 
         //Sets arm motor to whatever right trigger is at (maxes out at MAX_SPEED)
 
@@ -143,6 +152,7 @@ public class TeleOp2 extends OpMode {
        if(gamepad1.dpad_left){DP_angle = Math.PI/2;}
        if(gamepad1.dpad_down){DP_angle = Math.PI;}
        if(gamepad1.dpad_right){DP_angle = (3*Math.PI)/2;}
+
 
        FL = BR =  Math.sin(angle + DP_angle) * MAX_SPEED * r; //takes new angle and radius and converts them into the motor values
        FR = BL = Math.cos(angle + DP_angle) * MAX_SPEED * r;

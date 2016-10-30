@@ -21,7 +21,7 @@ public class ServoDebug extends OpMode {
     Servo servo1, servo2, servo3, servo4;
 
     int servo = 1;
-    int servoPosition = 0;
+    double servoPosition = 0;
     double increment = .05;
 
     @Override
@@ -48,11 +48,11 @@ public class ServoDebug extends OpMode {
             x=1;
         }
 
-        while(gamepad1.dpad_down && servoPosition >= 0){
-            servoPosition -= increment;
+        if(gamepad1.dpad_down && servoPosition >= 0){
+            servoPosition =- increment;
         }
-        while(gamepad1.dpad_up && servoPosition <= 1){
-            servoPosition += increment;
+        if(gamepad1.dpad_up && servoPosition <= 1){
+            servoPosition =+ increment;
         }
 
 

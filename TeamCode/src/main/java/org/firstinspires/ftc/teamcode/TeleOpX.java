@@ -59,7 +59,7 @@ public class TeleOpX extends OpMode {
         if(gamepad1.right_trigger > 0)
             robot.setLiftSpeed(gamepad1.right_trigger);
         else if(gamepad1.left_trigger > 0)
-            robot.setLiftSpeed(gamepad1.left_trigger);
+            robot.setLiftSpeed(-gamepad1.left_trigger);
         else
             robot.setLiftSpeed(0);
 

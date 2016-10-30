@@ -11,7 +11,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class Robot11248 {
     //Angles
     public static final double RIGHT_ANGLE = Math.PI/2;
-    public static final double OMNI_ANGLE_SHIFT = RIGHT_ANGLE/2;
+    public static final double OMNI_ANGLE_SHIFT = Math.PI;
 
     //Driving constants
     public static final double MAX_TURN = .30;
@@ -167,7 +167,16 @@ public class Robot11248 {
         double angle, magnitude;
 
         //rectangular to polar form
-        angle = x != 0 && y != 0 ? Math.atan2(y,x) : 0;
+        //angle = x != 0 && y != 0 ? Math.atan2(y,x) : 0;
+        if (x != 0) {
+            angle = Math.atan(y / x);
+
+        }else if(y > 0){//if it's 90 degrees use PI/2
+            angle = Math.PI/2;
+
+        }else{
+            angle = (3 * Math.PI)/2;
+        }
         magnitude = Math.sqrt( (x*x) + (y*y) ) ;
 
         //Turns angle by 45 degrees (Pi/4 radians) to accommodate omni wheel axis
