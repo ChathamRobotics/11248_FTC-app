@@ -73,7 +73,7 @@ public class TeleOp2 extends OpMode {
             rotat = gamepad1.right_stick_x * MAX_TURN; //turn reduction factor
         //} else {rotat=0;}
 
-        drive(x,y,rotat); //set wheel motors
+        drive(x,y,rotat, true); //set wheel motors
 
 
         //Sets beacon paddle up and down
@@ -121,7 +121,7 @@ public class TeleOp2 extends OpMode {
         addTelemetry(angle,rotat,x,y,FL,FR,BR,BL,r);
     }
 
-   public void drive(double x, double y, double rotat){
+   public void drive(double x, double y, double rotat, boolean smooth){
 
        //## CALCULATE VALUES ##
 
@@ -141,6 +141,12 @@ public class TeleOp2 extends OpMode {
 
        r = Math.sqrt( (x*x) + (y*y) ) ;//get the radius (hypotenuse)
        angle += (Math.PI/4);//take our angle and shift it 90 deg (PI/4)
+
+
+       if(smooth) r = r*r; //Using a function on variable r will smooth out the slow values but still give full range
+
+       //TODO: r = -(4/3*r-2)/((4/3*r)*(4/3*r)); Cooler more impressive function
+
 
        // BUG FIX atan() assumes x is always positive and angle in standard position
        // add PI to go to quadrant 2 or 3
