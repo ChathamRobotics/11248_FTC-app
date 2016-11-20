@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -11,6 +12,7 @@ import java.util.Map;
  * Team 11248 TeleOp for test robot.
  */
 @TeleOp(name = "DrivingOmni", group = "General")
+@Disabled
 public class DriverOmni extends OpMode {
     /*
      * Config

@@ -16,12 +16,19 @@ public class OmniWheelDriver {
     public static final double BACK_OFFSET = Math.PI;
     public static final double RIGHT_OFFSET = 3* Math.PI / 2;
 
+    public static final double SLOW_SPEED = .5;
+
     // Stateful
     private Telemetry telemetry;
     private DcMotor frontLeft;
     private DcMotor frontRight;
     private DcMotor backLeft;
     private DcMotor backRight;
+
+
+    public static double MAX_TURN = .20;
+    public static double MAX_SPEED = .80;
+    public static boolean SLOW = false;
 
     /*
      * The angle used to offset the front of the robot
@@ -66,14 +73,17 @@ public class OmniWheelDriver {
         this.telemetry = telemetry;
     }
 
-    public void driveold(double x, double y, double rotat, boolean smooth){
+    public void driveold(double x, double y, double rotate, boolean smooth){
         double FL, FR, BL, BR, angle, r;
         //## CALCULATE VALUES ##
+
+        rotate *= MAX_TURN;
 
         // Takes regular x,y coordinates and converts them into polar (angle radius) cooridnates
         // Then turns angle by 90 degrees (Pi/4) to accommodate omni wheel axis
 
         // if x is 0, atan comes out undefined instead of PI/2 or 3PI/2
+
         if (x != 0) {
             angle = Math.atan(y / x);
 
@@ -92,7 +102,6 @@ public class OmniWheelDriver {
 
         //TODO: r = -(4/3*r-2)/((4/3*r)*(4/3*r)); Cooler more impressive function
 
-
         // BUG FIX atan() assumes x is always positive and angle in standard position
         // add PI to go to quadrant 2 or 3
         if(x<0) {
@@ -100,19 +109,25 @@ public class OmniWheelDriver {
         }
 
 
-        FL = BR =  Math.sin(angle + offsetAngle)  * r; //takes new angle and radius and converts them into the motor values
-        FR = BL = Math.cos(angle + offsetAngle) * r;
+        FL = BR =  Math.sin(angle + offsetAngle) * MAX_SPEED * r; //takes new angle and radius and converts them into the motor values
+        FR = BL = Math.cos(angle + offsetAngle) * MAX_SPEED * r;
 
-        FL -= rotat; // implements rotation
-        FR -= rotat;
-        BL += rotat;
-        BR += rotat;
+        FL -= rotate; // implements rotation
+        FR -= rotate;
+        BL += rotate;
+        BR += rotate;
+
+        double SPEED = 1;
+
+        if(this.SLOW)
+            SPEED = SLOW_SPEED;
+
 
         if(FL<=1 & FR<=1 & BR <=1 & BL<=1) {// Prevent fatal error
-            frontLeft.setPower(FL); // -rot fl br y
-            frontRight.setPower(FR); // -
-            backLeft.setPower(-BL); // +
-            backRight.setPower(-BR); //+
+            frontLeft.setPower(FL*SPEED); // -rot fl br y
+            frontRight.setPower(FR*SPEED); // -
+            backLeft.setPower(-BL*SPEED); // +
+            backRight.setPower(-BR*SPEED); //+
         }
     }
 
